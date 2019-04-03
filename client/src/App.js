@@ -32,19 +32,17 @@ class App extends Component {
 
   handleChange = (e, changeOn = 'add') => {
     const { workoutId, editWorkout } = this.state
-    // Adding workout
-    if (changeOn === 'add') {
-      return this.setState({ [e.target.name]: e.target.value })
-    }
 
-    // Editing workout
-    this.setState({
-      editWorkout: {
-        id: workoutId,
-        day: e.target.name === 'day' ? e.target.value : editWorkout.day,
-        name: e.target.name === 'name' ? e.target.value : editWorkout.name
-      }
-    })
+    // Adding workout or editing a workout
+    return changeOn === 'add'
+      ? this.setState({ [e.target.name]: e.target.value })
+      : this.setState({
+        editWorkout: {
+          id: workoutId,
+          day: e.target.name === 'day' ? e.target.value : editWorkout.day,
+          name: e.target.name === 'name' ? e.target.value : editWorkout.name
+        }
+      })
   }
 
   handleSubmit = e => {
@@ -84,10 +82,7 @@ class App extends Component {
       workoutId: id,
       isVisible: {
         del: true
-      }
-    })
-
-    this.setState({
+      },
       workoutName: this.state.workouts.filter(workout => workout.id === id)[0]
         .name
     })
@@ -104,7 +99,6 @@ class App extends Component {
 
   handleUpdate = () => {
     const { editWorkout, workouts, workoutId } = this.state
-    console.log(editWorkout)
 
     this.setState({
       ...this.state,
@@ -126,6 +120,7 @@ class App extends Component {
       workoutName,
       editWorkout
     } = this.state
+
     return (
       <div className='App'>
         <Title level={3}> {appTitle}</Title>
